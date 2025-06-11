@@ -48,3 +48,46 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+# 🎮 GameHub
+
+**GameHub** is a fun mobile app built with React Native and Expo Router.  
+It features 4 engaging mini-games:
+
+- 🧠 Memory Match (Concentration)
+- ❌⭕ Tic Tac Toe with AI
+- 🐹 Whack-a-Mole
+- 🎵 Simon Says (Pattern Memory Game with Sound)
+
+## 📱 Features
+
+- Smooth animations and transitions
+- Sound effects and background music
+- Custom game UI for each level
+- Responsive design for mobile
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/your-username/GameHub.git
+cd GameHub
+npm install
+npx expo start
+```
+
+GameHub/
+│
+├── app/
+│ ├── memory-match/
+│ ├── tic-tac-toe/
+│ ├── whack-a-mole/
+│ ├── simon-says/
+│
+├── components/
+│ ├── Header.tsx
+│ ├── Footer.tsx
+│ └── FlipCard.tsx
+│
+├── assets/
+│ ├── bg.png
+│ └── sound/
