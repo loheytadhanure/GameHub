@@ -1,140 +1,118 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView,ImageBackground } from 'react-native';
-import { useRouter } from 'expo-router';
-import FlipCard from '../components/FlipCard';
-import { AntDesign } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Pressable, ImageBackground, Dimensions } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Audio } from 'expo-av';
-import Login from './login';
-import Signup from './signUp';
-import { useAuth } from '../context/AuthContext';
-import { RootLayout} from "./_layout";
+import FlipCard from '../components/FlipCard';
+import { useRouter } from 'expo-router';
+
+const { width } = Dimensions.get('window');
 
 const games = [
-  {
-    title: 'Memory Match',
-    emoji: '🧠',
-    route: '/memory-match',
-  },
-  {
-    title: 'Tic Tac Toe',
-    emoji: '❌',
-    route: '/tic-tac-toe',
-  },
-  {
-    title: 'Whack-a-Mole',
-    emoji: '🐹',
-    route: '/whack-a-mole',
-  },
-  {
-    title: 'Simon Says',
-    emoji: '🟢',
-    route: '/simon-says',
-  },
+  { title: 'Memory Match', emoji: '🧠', route: '/memory-match' },
+  { title: 'Tic Tac Toe', emoji: '❌', route: '/tic-tac-toe' },
+  { title: 'Whack-a-Mole', emoji: '🐹', route: '/whack-a-mole' },
+  { title: 'Simon Says', emoji: '🟢', route: '/simon-says' },
 ];
 
-export default function HomeScreen() {
+export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
-  const { user } = useAuth();
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % games.length);
-  };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + games.length) % games.length);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? games.length - 1 : prevIndex - 1
+    );
   };
-  // Auto-slide after 5 seconds
-  useEffect(() => {
-    const timer = setInterval(handleNext, 5000);
-    return () => clearInterval(timer);
-  }, []);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === games.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   const currentGame = games[currentIndex];
 
-return (
-  <ImageBackground
-    source={require('../assets/bg.png')}
-    style={styles.background}
-    resizeMode="cover"
-  >
-    <View style={styles.wrapper}>
-      
-      {/* Scrollable content */}
-      <ScrollView contentContainerStyle={styles.content}>
-        <Header />
-        <Text style={styles.title}>🎮 Choose a Game</Text>
+  return (
+    <ImageBackground
+      source={require('../assets/bg.png')}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <Header />
+
+      <View style={styles.mainContent}>
+        <Text style={styles.chooseGameText}>🎮 Choose a Game</Text>
 
         <View style={styles.carouselContainer}>
           <Pressable style={styles.arrow} onPress={handlePrev}>
             <Text style={styles.arrowText}>◀</Text>
           </Pressable>
 
-          <FlipCard
-            title={currentGame.title}
-            emoji={currentGame.emoji}
-            onPress={() => router.push(currentGame.route)}
-          />
+          <View style={{ marginHorizontal: 10 }}>
+            <FlipCard
+              title={currentGame.title}
+              emoji={currentGame.emoji}
+              onPress={() => router.push(currentGame.route)}
+            />
+          </View>
 
           <Pressable style={styles.arrow} onPress={handleNext}>
             <Text style={styles.arrowText}>▶</Text>
           </Pressable>
         </View>
-      </ScrollView>
+      </View>
 
-      {/* Sticky footer */}
       <Footer />
-    </View>
-  </ImageBackground>
-);
-
+    </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingBottom: 60,
- 
-    minHeight: '100%',
-  },
-  title: {
-    fontSize: 28,
-  fontWeight: 'bold',
-  marginVertical: 20,
-  alignSelf: 'center',
-  color: '#fff', // white text for visibility
-  textShadowColor: 'rgba(0, 0, 0, 0.6)',
-  textShadowOffset: { width: 1, height: 1 },
-  textShadowRadius: 4,
-  },
-background: {
-  flex: 1,
-  width: '100%',
-  height: '100%',
-},
-
-  carouselContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 40,
-    padding:20,
-  },
-  arrow: {
-    padding: 10,
-  },
-  arrowText: {
-    fontSize: 36,
-  color: '#fff', // white arrows look cleaner over a background image
-  fontWeight: 'bold',
-  },
-  wrapper: {
+  background: {
     flex: 1,
     justifyContent: 'space-between',
+    width:'100%',
+    height:'100%',
   },
-  content: {
-    flex: 1,
+  mainContent: {
+    alignItems: 'center',
+    paddingVertical: 30,
+    flexGrow: 1,
   },
+  chooseGameText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 20,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
+  },
+  
+  carouselContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginVertical: 20,
+  paddingHorizontal: 16,
+  gap: 10, 
+},
+arrow: {
+  padding: 10,
+  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  borderRadius: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5,
+},
+arrowText: {
+  fontSize: 28,
+  color: '#fff',
+  fontWeight: 'bold',
+},
+
 });

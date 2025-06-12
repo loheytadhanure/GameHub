@@ -1,4 +1,3 @@
-// app/login.tsx
 import React from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -9,7 +8,7 @@ export default function Login() {
     const { login } = useAuth();
 
     const handleLogin = () => {
-    login(); // sets isLoggedIn = true
+    login(); 
     router.push('/');
   };
 
