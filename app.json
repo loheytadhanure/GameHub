@@ -8,15 +8,18 @@
     "scheme": "gamehubnew",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
+    "sdkVersion": "53.0.0",
     "android": {
+      "package": "com.loheyta.gamehub",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
+    },
+    "ios": {
+      "supportsTablet": true
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +40,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "96eab5cc-d5db-4c55-90b8-601ffefdaab1"
+      }
     }
   }
 }
